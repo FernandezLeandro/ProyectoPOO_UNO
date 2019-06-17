@@ -5,7 +5,7 @@ package cartas;
  * Este enumerado define los colores que tendran las cartas
  * Las especiales son aquellas que no tienen valor,
  * como la carta de CAMBIA_RONDA, SALTEA, CAMBIA_COLOR
- * @author Lean
+ * @author Leandro Fernandez
  */
 public enum eColor {
 	AMARILLO,

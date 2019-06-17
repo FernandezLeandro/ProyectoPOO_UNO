@@ -5,8 +5,8 @@ import java.util.Random;
 /**
  * Clase : Mazo
  * Se encargará de crear y manipular el mazo de juego, utilizando las cartas para ello.
- * @author Lean
- * @version 1.0 - 17/06/2019
+ * @author Leandro Fernandez
+ * @version 1.0.1 - 17/06/2019
  */
 
 public class Mazo {
@@ -53,9 +53,13 @@ public class Mazo {
 	}
 	
 	public void mostrarMazo () {
-		for (Carta c : cartas) {
-			System.out.println(c);
-		}
+		int i = 1; // Valor con que se lo podra manipular en consola
+		for (Carta c : cartas) {// Muestra la lista de cartas
+			if (c.getTipo() == eTipo.COMUN) {
+				System.out.println(i++ + " - " + c.mostrarComun()); 
+			} else
+				System.out.println(i++ + " - " + c.mostrarEspecial()); 
+		}	
 	}
 	
 	public void mezclarMazo() {

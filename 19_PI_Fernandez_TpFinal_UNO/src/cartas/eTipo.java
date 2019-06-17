@@ -3,7 +3,7 @@ package cartas;
  * Enumerado: eTipo
  * Define los tipos de cartas que hay en el juego, las comunes
  * obviamente son aquellas que tienen valor
- * @author Lean
+ * @author Leandro Fernandez
  *
  */
 public enum eTipo {

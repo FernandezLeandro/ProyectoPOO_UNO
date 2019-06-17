@@ -4,7 +4,7 @@ package cartas;
  * Clase : Carta
  * Esta clase define la estructura de las cartas.
  * @author Leandro Fernández
- * @version 1.0 - 17/06/2019 
+ * @version 1.0.1 - 17/06/2019 
  */
 public class Carta {
 	private eColor color;
@@ -39,4 +39,32 @@ public class Carta {
 		return "Carta: " + getTipo() + ", Valor: " + getValor () + ", Color: " + getColor();
 		
 	}
+	
+	public String mostrarComun () {
+		return "Valor: " + getValor () + ", Color: " + getColor();
+		
+	}
+	public String mostrarEspecial () {
+		String retorno = "";		
+		switch (tipo) {
+			case ROBA_2:
+				retorno = "Carta: |+2| ";
+				break;
+			case PIERDE_TURNO: 
+				retorno = "Carta: SALTEA";
+				break;
+			case CAMBIO_SENTIDO:
+				retorno = "Carta: CAMBIA RONDA";
+				break;
+			case COMODIN:
+				retorno = "Carta: COMODIN DE COLORES";
+				break;
+			case COMODIN_ROBA_4:
+				retorno = "Carta: COMODIN |+4| ";
+				break;
+		}		
+		return retorno;
+	}
+
+	
 }
