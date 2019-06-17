@@ -68,7 +68,7 @@ public class Mazo {
 		}
 	}
 	
-	public Carta darCarta() {
+	public Carta darCarta() { //Metodo que da la primer carta del mazo
 		if (cartaActual >= cartas.length) 
 			return null; //Devuelve null si ya no hay mazo
 		else
