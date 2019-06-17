@@ -6,7 +6,6 @@ package cartas;
  * Las especiales son aquellas que no tienen valor,
  * como la carta de CAMBIA_RONDA, SALTEA, CAMBIA_COLOR
  * @author Lean
- * @version 1.0 - 17/06/2019
  */
 public enum eColor {
 	AMARILLO,

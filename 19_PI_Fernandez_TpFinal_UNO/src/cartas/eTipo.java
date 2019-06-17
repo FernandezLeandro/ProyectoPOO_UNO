@@ -8,9 +8,9 @@ package cartas;
  */
 public enum eTipo {
 	COMUN,
-	MAS2,
-	MAS4,
-	SALTEA,
-	CAMBIA_RONDA,
-	CAMBIA_COLOR
+	ROBA_2,	
+	PIERDE_TURNO,
+	CAMBIO_SENTIDO,
+	COMODIN_ROBA_4,
+	COMODIN
 }

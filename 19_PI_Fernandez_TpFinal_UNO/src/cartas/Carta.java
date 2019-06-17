@@ -34,4 +34,9 @@ public class Carta {
 	public eTipo getTipo() {
 		return tipo;
 	}
+	
+	public String toString () {
+		return "Carta: " + getTipo() + ", Valor: " + getValor () + ", Color: " + getColor();
+		
+	}
 }
