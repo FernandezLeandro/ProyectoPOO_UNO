@@ -1,4 +1,7 @@
 package cartas;
+
+import java.util.Random;
+
 /**
  * Clase : Mazo
  * Se encargará de crear y manipular el mazo de juego, utilizando las cartas para ello.
@@ -8,7 +11,7 @@ package cartas;
 
 public class Mazo {
 	private Carta [] cartas = new Carta [108];
-	
+	private int cartaActual = 0;
 	public Mazo () {
 		int numCarta = 0; // Indice de las cartas, para realizar las 108, comienza en 
 		eColor [] colores = new eColor [4]; // Arreglo para hacer los colores y los especiales
@@ -42,20 +45,35 @@ public class Mazo {
 							vuelta++;
 						}
 						vuelta = 1; // Reinicia para el proximo
-					}
-					
-					
+					}				
 				}
 			}
 			
 		}
-		
-	
-		//System.out.println(colores.length);
 	}
+	
 	public void mostrarMazo () {
 		for (Carta c : cartas) {
 			System.out.println(c);
 		}
 	}
+	
+	public void mezclarMazo() {
+		Random r = new Random();
+		for(int i = 0; i < cartas.length; i ++) {
+			int pos = r.nextInt(108);
+			Carta aux = cartas[i];
+			cartas[i] = cartas[pos];
+			cartas[pos] = aux;
+		}
+	}
+	
+	public Carta darCarta() {
+		if (cartaActual >= cartas.length) 
+			return null; //Devuelve null si ya no hay mazo
+		else
+			return cartas[cartaActual++]; //Devuelve la primera carta actuald el mazo (como cuando tomas una carta en un mazo al jugar cualquier juego)
+		
+	}
+	
 }
