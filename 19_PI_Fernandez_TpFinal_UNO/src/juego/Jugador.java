@@ -62,4 +62,8 @@ public class Jugador {
 		}
 		
 	}
+	
+	public String toString () {
+		return "Jugador: " + getNombre() + "| Puntos: " + getPuntos();
+	}
 }
