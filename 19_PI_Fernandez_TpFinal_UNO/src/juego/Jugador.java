@@ -33,10 +33,6 @@ public class Jugador {
 		return nombre;
 	}
 
-	public int getPuntos() {
-		return puntos;
-	}
-
 	public void mostrarMazo () {
 		int i = 1; // Valor con que se lo podra manipular en consola
 		for (Carta c : misCartas) {// Muestra la lista de cartas
@@ -47,4 +43,23 @@ public class Jugador {
 		}		
 	}
 	
+	public int getPuntos () { // Obtiene puntos segun las cartas de su mazo
+		int ptos = 0;
+		if (misCartas.isEmpty()) { // Si esta vacio devuelve 0
+			return ptos;
+		} else {
+			for (Carta c : misCartas) {
+				if (c.getTipo() == eTipo.COMUN) { // Si la carta es comun incrementa con su valor
+					ptos += c.getValor();
+				} else {
+					if (c.getTipo() == eTipo.COMODIN || c.getTipo() == eTipo.COMODIN_ROBA_4) {
+						ptos += 50; // Si es algun comodin suma 50
+					} else
+						ptos += 20; // Si es otro tipo especial, suma 20
+				}
+			}
+			return ptos;
+		}
+		
+	}
 }

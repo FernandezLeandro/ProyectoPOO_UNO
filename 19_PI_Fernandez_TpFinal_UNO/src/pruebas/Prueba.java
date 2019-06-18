@@ -3,6 +3,7 @@ package pruebas;
 import java.util.Random;
 
 import cartas.Mazo;
+import juego.Juego;
 import juego.Jugador;
 
 public class Prueba {
@@ -14,7 +15,9 @@ public class Prueba {
 		//mz.mostrarMazo();
 		j1.nuevaCarta(mz.darCarta());
 		j1.nuevaCarta(mz.darCarta());
-		j1.mostrarMazo();
+		j1.nuevaCarta(mz.darCarta());
+		//j1.mostrarMazo();
+		Juego motor = new Juego();
 	}
 
 }
