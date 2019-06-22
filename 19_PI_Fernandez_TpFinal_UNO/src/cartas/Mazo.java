@@ -1,18 +1,21 @@
 package cartas;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Clase : Mazo
  * Se encargará de crear y manipular el mazo de juego, utilizando las cartas para ello.
  * @author Leandro Fernandez
- * @version 1.0.1 - 17/06/2019
+ * @version 1.0.2 - 22/06/2019
  */
 
 public class Mazo {
 	private Carta [] cartas = new Carta [108];
+	private ArrayList <Carta> mazoDescartes = new ArrayList <>();
 	private int cartaActual = 0;
-	public Mazo () {
+	
+	public Mazo () {	
 		int numCarta = 0; // Indice de las cartas, para realizar las 108, comienza en 
 		eColor [] colores = new eColor [4]; // Arreglo para hacer los colores y los especiales
 		colores = eColor.values(); // Al array le devuelve los valores del enumerado, ejemplo -> colores [0] = AMARILLO
@@ -52,6 +55,27 @@ public class Mazo {
 		}
 	}
 	
+	// El mazo descarte es el cual tiene las cartas que se van jugando, mientras que el mazo comun tiene las no jugadas aun.
+	public void addDescarte (Carta carta) {
+		mazoDescartes.add(carta);
+	}
+	
+	public void mostrarUltimoDescarte () { //Muestra la ultima carta del mazo
+		System.out.println(mazoDescartes.get(mazoDescartes.size()-1));
+	}
+	
+	public void mostrarDescartes () {//Muestra todos los descartes
+		for (Carta c : mazoDescartes) {
+			System.out.println(c);
+		}
+	}
+	
+	public Carta devolverUltimoDescarte () {
+		if (mazoDescartes.isEmpty()) {
+			return null;
+		} else
+			return mazoDescartes.get(mazoDescartes.size()-1);
+	}
 	public void mostrarMazo () {
 		int i = 1; // Valor con que se lo podra manipular en consola
 		for (Carta c : cartas) {// Muestra la lista de cartas
