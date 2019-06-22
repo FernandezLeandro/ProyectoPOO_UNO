@@ -24,11 +24,13 @@ public class Juego {
 	}
 
 	private void mostrarJugadores() { // Muestra los jugadores, si hay
+		System.out.println("Lista de jugadores:");
 		if (listaJugadores.isEmpty()) {
 			System.out.println("No hay jugadores actualmente.");
 		} else {
+			int i = 0;
 			for (Jugador j : listaJugadores) {
-				System.out.println(j);
+				System.out.println(++i + " - " + j);
 			}
 		}
 	}
@@ -58,10 +60,11 @@ public class Juego {
 		System.out.println("- Puntaje para ganar: " + puntajeMAX + " ptos" + "-----------");
 		System.out.println("-----------------------------------------");
 		System.out.println(" 1 - Agregar Jugador --------------------");
-		System.out.println(" 2 - Lista Jugadores --------------------");
-		System.out.println(" 3 - Modificar puntaje MÁXIMO -----------");
-		System.out.println(" 4 - Comenzar a jugar! ------------------");
-		System.out.println(" 5 - Ayuda ------------------------------");
+		System.out.println(" 2 - Eliminar Jugador -------------------");
+		System.out.println(" 3 - Lista Jugadores --------------------");
+		System.out.println(" 4 - Modificar puntaje MÁXIMO -----------");
+		System.out.println(" 5 - Comenzar a jugar! ------------------");
+		System.out.println(" 6 - Ayuda ------------------------------");
 		System.out.println(" 9 - Salir ------------------------------");
 		System.out.println("-----------------------------------------");
 		System.out.print("Seleccione una opción: ");		
@@ -76,31 +79,43 @@ public class Juego {
 			switch (opcion) {
 			case '1':// Agrega un jugador
 				System.out.println("-----------------------------------------");
-				System.out.print(" Agregar Jugador -> Ingrese nombre del jugador: ");
-				String jugador = EntradaConsola.tomarString();
-				while (jugador.length() == 0) {
-					System.out.print("Se necesita nombre para jugador, ingrese uno: ");	
-					jugador = EntradaConsola.tomarString();					
-				} 
-				agregarJugador (jugador);				
-				System.out.println(" Jugador: " + jugador +", añadido con exito!");	
+				if (listaJugadores.size() < 10) { // Maximo pueden haber 10 jugadores
+					System.out.print(" Agregar Jugador -> Ingrese nombre del jugador: ");
+					String jugador = EntradaConsola.tomarString();
+					while (jugador.length() == 0) {
+						System.out.print("Se necesita nombre para jugador, ingrese uno: ");	
+						jugador = EntradaConsola.tomarString();					
+					} 
+					agregarJugador (jugador);				
+					System.out.println(" Jugador: " + jugador +", añadido con exito!");	
+				} else
+					System.out.println("ERROR: Maximo puede haber 10 jugadores.");
+				
 				break;
-			case '2':// Muestra la lista actual de jugadores
-				System.out.println("Lista de jugadores:");
-				mostrarJugadores();
+			case '2': // Elimina un jugador
+				mostrarJugadores ();
+				System.out.print("Ingrese el numero de jugador a eliminar: ");
+				int numero = EntradaConsola.tomarInt();
+				if (numero <= listaJugadores.size()) {
+					listaJugadores.remove(numero-1);
+				} else
+					System.out.println("El numero ingresado es invalido");
 				break;
-			case '3': // Modificar el puntaje maximo de juego
+			case '3':// Muestra la lista actual de jugadores				
+				mostrarJugadores();			
+				break;
+			case '4': // Modificar el puntaje maximo de juego
 				System.out.print("Ingrese el puntaje nuevo: ");
 				int puntaje = EntradaConsola.tomarInt();
 				actualizarPtosMax(puntaje);
 				break;
-			case '4': // Comienzo del juego
+			case '5': // Comienzo del juego
 				if (listaJugadores.size() == 2) {
 					comenzarRonda();
 				} else
 					System.out.println("Se necesitan minimo dos jugadores para comenzar.");
 				break;
-			case '5':
+			case '6':
 				mostrarAyuda();
 				break;
 			case '9': 
