@@ -8,4 +8,5 @@ package juego;
 public enum cambiosDeTurno {
 	PASA_TURNO,
 	SALTEA_TURNO,
+	CAMBIO_RONDA
 }

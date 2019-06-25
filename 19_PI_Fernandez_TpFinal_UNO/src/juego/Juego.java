@@ -21,6 +21,7 @@ public class Juego {
 	private int puntajeMAX = 500;
 	private Mazo mazo = new Mazo ();
 	private Turno turno;
+	private eTipo tipoEnJuego;
 	private eColor colorEnJuego;
 	private int numeroEnJuego;
 	boolean hayGanador = false;
@@ -67,10 +68,63 @@ public class Juego {
 	private void cambiaCartaEnJuego(Carta carta) {// Define la carta que esta en juego actualmente
 		colorEnJuego = carta.getColor();
 		numeroEnJuego = carta.getValor();
+		tipoEnJuego = carta.getTipo();
 	}
 
 	public void mostrarAyuda () { // Ofrece una ayuda de como jugar al usuario
 		System.out.println("El puntaje maximo por default es de 500 pts si no es modificado.");
+	}
+	
+	private void evaluarCartaEnJuego() {
+		switch (tipoEnJuego) {
+		case ROBA_2:
+			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 2 cartas y pierde el turno");
+			jugadorTomaNCartas (turno.turnoDe(), 2);
+			queCambio = cambiosDeTurno.PASA_TURNO;
+			notificarObservadores();
+			break;
+		case PIERDE_TURNO:
+			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", pierde el turno");
+			queCambio = cambiosDeTurno.PASA_TURNO;
+			notificarObservadores();
+			break;
+		case CAMBIO_SENTIDO:
+			System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
+			queCambio = cambiosDeTurno.CAMBIO_RONDA;
+			notificarObservadores();
+			break;
+		case COMODIN_ROBA_4:
+			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 4 cartas y pierde el turno");
+			jugadorTomaNCartas (turno.turnoDe(), 4);
+			queCambio = cambiosDeTurno.PASA_TURNO;
+			notificarObservadores();
+			break;
+		}
+	}
+
+	private void jugadorTomaNCartas(Jugador jugador, int cantidad) {
+		for (int i = 1; i <= cantidad ; i++  ) {
+			jugador.nuevaCarta(mazo.darCarta());
+		}
+	}
+	
+	private boolean descarteEsComodin() { // Verifica si la carta en descarte es un comodin
+		if (mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN || mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN_ROBA_4) {
+			return true;
+		} else
+			return false;
+	} 
+	
+	private void huboGanador() {
+		hayGanador = true;
+	}
+
+	private boolean verificarGanador (Jugador jugador) {
+		if (jugador.cantidadCartas() == 0) {
+			return true;
+		} else
+			return false;
+		
 	}
 	
 	private void mostrarMenuPrincipal() {
@@ -159,10 +213,15 @@ public class Juego {
 
 
 	private void comenzarRonda() {
-		System.out.println("-- Juego en curso --");
+		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		System.out.println("*---------- JUEGO EN CURSO -------------*");
+		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		repartirMazo();
 		turno = new Turno (listaJugadores);
 		observadores.add(turno);
+		System.out.println(" Carta en juego: ");
+		System.out.println(mazo.devolverUltimoDescarte());
+		evaluarCartaEnJuego ();
 		while (!hayGanador) {
 			menuDeJuego (turno.turnoDe());
 			
@@ -171,11 +230,15 @@ public class Juego {
 	}
 
 	private void menuDeJuego(Jugador jugador) {
+		System.out.println("-----------------------------------------");
 		System.out.println("Jugador en turno: " + jugador.getNombre());
+		System.out.println("-----------------------------------------");
 		System.out.println("Carta en juego: ");
 		System.out.println(mazo.devolverUltimoDescarte());
+		System.out.println("-----------------------------------------");
 		System.out.println("Tus cartas son: ");
 		jugador.mostrarMazo();
+		System.out.println("-----------------------------------------");
 		System.out.println("Seleccione la carta a jugar: ");
 		
 		int intentos = 1;
@@ -193,8 +256,10 @@ public class Juego {
 					if (verificarGanador (jugador)) { // Verificara si gano
 						huboGanador();
 					}
+					/*
 					queCambio = cambiosDeTurno.PASA_TURNO;
 					notificarObservadores(); // Notifica al observador lo que cambio
+					*/
 				} else {
 					System.out.println("Carta mal jugada, intente nuevamente: ");
 					intentos++;
@@ -210,17 +275,7 @@ public class Juego {
 			
 	}
 
-	private void huboGanador() {
-		hayGanador = true;
-	}
-
-	private boolean verificarGanador (Jugador jugador) {
-		if (jugador.cantidadCartas() == 0) {
-			return true;
-		} else
-			return false;
-		
-	}
+	
 
 	private boolean validarJugada(Carta carta) { //Validara cada jugada que se quiere realizar
 		boolean validado = false;
@@ -229,9 +284,13 @@ public class Juego {
 		case COMUN:
 			if (descarteEsComodin ()) {
 				validado = true;
+				queCambio = cambiosDeTurno.PASA_TURNO;
+				notificarObservadores(); // Notifica al observador lo que cambio
 			} else {
 				if (carta.getValor() == numeroEnJuego || carta.getColor() == colorEnJuego) {
 					validado = true;
+					queCambio = cambiosDeTurno.PASA_TURNO;
+					notificarObservadores(); // Notifica al observador lo que cambio
 				} else
 					validado = false;
 			}
@@ -259,13 +318,7 @@ public class Juego {
 		
 	}
 
-	private boolean descarteEsComodin() { // Verifica si la carta en descarte es un comodin
-		if (mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN || mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN_ROBA_4) {
-			return true;
-		} else
-			return false;
-	} 
-	
+
 	/* 
 	for (Jugador j : listaJugadores) {
 			System.out.println(j.getNombre());

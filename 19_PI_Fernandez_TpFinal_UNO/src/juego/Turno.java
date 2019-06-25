@@ -22,6 +22,9 @@ public class Turno implements IObservador{
 		case SALTEA_TURNO:
 			
 			break;
+		case CAMBIO_RONDA:
+			
+			break;
 		}
 	}
 }
