@@ -15,6 +15,7 @@ public class Jugador {
 	private String nombre;
 	private int puntos;
 	private ArrayList <Carta> misCartas = new ArrayList <Carta>();
+
 	
 	public Jugador (String nombre) {
 		this.nombre = nombre;
@@ -32,7 +33,15 @@ public class Jugador {
 	public String getNombre() {
 		return nombre;
 	}
-
+	
+	public Carta mostrarCarta (int numero) {
+		return misCartas.get(numero);
+	}
+	
+	public void darCarta (Carta carta) {
+		int pos = misCartas.indexOf(carta);
+		misCartas.remove(pos);
+	}
 	public void mostrarMazo () {
 		int i = 1; // Valor con que se lo podra manipular en consola
 		for (Carta c : misCartas) {// Muestra la lista de cartas
@@ -65,5 +74,9 @@ public class Jugador {
 	
 	public String toString () {
 		return "Jugador: " + getNombre() + "| Puntos: " + getPuntos();
+	}
+
+	public int cantidadCartas() {
+		return misCartas.size();
 	}
 }

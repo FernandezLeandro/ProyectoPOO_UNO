@@ -36,25 +36,28 @@ public class Carta {
 	}
 	
 	public String toString () {
-		return "Carta: " + getTipo() + ", Valor: " + getValor () + ", Color: " + getColor();
+		if (this.getTipo()== eTipo.COMUN) {
+			return mostrarComun();
+		} else
+			return mostrarEspecial();
 		
 	}
 	
 	public String mostrarComun () {
-		return "Valor: " + getValor () + ", Color: " + getColor();
+		return "Valor: " + this.getValor () + ", Color: " + this.getColor();
 		
 	}
 	public String mostrarEspecial () {
 		String retorno = "";		
 		switch (tipo) {
 			case ROBA_2:
-				retorno = "Carta: |+2| ";
+				retorno = "Carta: |+2| " + ", Color: "+ this.getColor();
 				break;
 			case PIERDE_TURNO: 
-				retorno = "Carta: SALTEA";
+				retorno = "Carta: SALTEA" + ", Color: "+ this.getColor();
 				break;
 			case CAMBIO_SENTIDO:
-				retorno = "Carta: CAMBIA RONDA";
+				retorno = "Carta: CAMBIA RONDA" + ", Color: "+ this.getColor();
 				break;
 			case COMODIN:
 				retorno = "Carta: COMODIN DE COLORES";

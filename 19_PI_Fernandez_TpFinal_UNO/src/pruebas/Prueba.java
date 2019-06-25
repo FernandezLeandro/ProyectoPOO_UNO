@@ -11,13 +11,17 @@ public class Prueba {
 	public static void main(String[] args) {
 		Jugador j1 = new Jugador ("Leandro");
 		Mazo mz = new Mazo ();
-		mz.mezclarMazo();
+		//mz.mezclarMazo();
 		//mz.mostrarMazo();
+		/*
 		j1.nuevaCarta(mz.darCarta());
 		j1.nuevaCarta(mz.darCarta());
 		j1.nuevaCarta(mz.darCarta());
 		//j1.mostrarMazo();
+		*/
 		Juego motor = new Juego();
+
+
 	}
 
 }

@@ -16,6 +16,7 @@ public class Mazo {
 	private int cartaActual = 0;
 	
 	public Mazo () {	
+		int p = -1; // Es una variable que se usara luego
 		int numCarta = 0; // Indice de las cartas, para realizar las 108, comienza en 
 		eColor [] colores = new eColor [4]; // Arreglo para hacer los colores y los especiales
 		colores = eColor.values(); // Al array le devuelve los valores del enumerado, ejemplo -> colores [0] = AMARILLO
@@ -43,11 +44,14 @@ public class Mazo {
 					} else {
 						while (vuelta < 3) { // Evalua las 2 vueltas
 							for (int i= 1; i <= 4; i++) {
-								cartas [numCarta++] = new Carta (tipos[tipo]);
+								p++; //Esta variable hara 2 cartas de mismo color para cada especial, es decir 2 +2 color rojo, al igual con todas las demas restantes.
+								cartas [numCarta++] = new Carta (-1, tipos[tipo], colores [p]);
 							}
 							vuelta++;
+							p = -1;
 						}
 						vuelta = 1; // Reinicia para el proximo
+						
 					}				
 				}
 			}
@@ -55,6 +59,7 @@ public class Mazo {
 		}
 	}
 	
+	// MAZO DESCARTE
 	// El mazo descarte es el cual tiene las cartas que se van jugando, mientras que el mazo comun tiene las no jugadas aun.
 	public void addDescarte (Carta carta) {
 		mazoDescartes.add(carta);
