@@ -5,7 +5,7 @@ package juego;
  * @author Leandro Fernandez
  * @version 1.0 - 24/06/19
  */
-public enum cambiosDeTurno {
+public enum CambiosDeTurno {
 	PASA_TURNO,
 	SALTEA_TURNO,
 	CAMBIO_RONDA

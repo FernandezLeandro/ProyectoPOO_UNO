@@ -7,6 +7,7 @@ package juego;
  * @version 1.0 - 22/06/2019
  */
 import java.util.ArrayList;
+import java.util.Random;
 
 import cartas.Carta;
 import cartas.Mazo;
@@ -16,13 +17,14 @@ import cartas.eTipo;
 public class Juego {
 	private ArrayList <Jugador> listaJugadores = new ArrayList <Jugador> ();
 	private ArrayList<IObservador> observadores = new ArrayList<>();
-	cambiosDeTurno queCambio;
+	CambiosDeTurno queCambio;
 	private boolean termino = false;
 	private int puntajeMAX = 500;
 	private Mazo mazo = new Mazo ();
 	private Turno turno;
 	private eTipo tipoEnJuego;
 	private eColor colorEnJuego;
+	private eColor [] colores = new eColor [4];// Arreglo para cuando la primera carta sea el comodin y genere un color al azar
 	private int numeroEnJuego;
 	boolean hayGanador = false;
 	public Juego () {
@@ -80,26 +82,37 @@ public class Juego {
 		case ROBA_2:
 			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 2 cartas y pierde el turno");
 			jugadorTomaNCartas (turno.turnoDe(), 2);
-			queCambio = cambiosDeTurno.PASA_TURNO;
+			queCambio = CambiosDeTurno.PASA_TURNO;
 			notificarObservadores();
 			break;
 		case PIERDE_TURNO:
-			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", pierde el turno");
-			queCambio = cambiosDeTurno.PASA_TURNO;
+			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
+			queCambio = CambiosDeTurno.PASA_TURNO;
 			notificarObservadores();
 			break;
 		case CAMBIO_SENTIDO:
 			System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
-			queCambio = cambiosDeTurno.CAMBIO_RONDA;
+			queCambio = CambiosDeTurno.CAMBIO_RONDA;
 			notificarObservadores();
 			break;
 		case COMODIN_ROBA_4:
 			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 4 cartas y pierde el turno");
+			System.out.println("El nuevo color en juego es: " + generarColorAzar());
 			jugadorTomaNCartas (turno.turnoDe(), 4);
-			queCambio = cambiosDeTurno.PASA_TURNO;
+			queCambio = CambiosDeTurno.PASA_TURNO;
 			notificarObservadores();
 			break;
+		case COMODIN:
+			System.out.println("El nuevo color en juego es: " + generarColorAzar());
+			break;
 		}
+	}
+
+	private eColor generarColorAzar() {
+		colores = eColor.values();
+		Random numero = new Random ();
+		//numero = numero.nextInt(5);
+		return colores [numero.nextInt(5)];
 	}
 
 	private void jugadorTomaNCartas(Jugador jugador, int cantidad) {
@@ -108,8 +121,8 @@ public class Juego {
 		}
 	}
 	
-	private boolean descarteEsComodin() { // Verifica si la carta en descarte es un comodin
-		if (mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN || mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN_ROBA_4) {
+	private boolean descarteEsComodin4() { // Verifica si la carta en descarte es un comodin
+		if  (mazo.devolverUltimoDescarte().getTipo() == eTipo.COMODIN_ROBA_4) {
 			return true;
 		} else
 			return false;
@@ -230,19 +243,21 @@ public class Juego {
 	}
 
 	private void menuDeJuego(Jugador jugador) {
+		boolean jugo = false; //Luego se verifica si jugo o perdio sus 3 intentos (y debe agarrar una carta)
 		System.out.println("-----------------------------------------");
-		System.out.println("Jugador en turno: " + jugador.getNombre());
+		System.out.println(" Jugador en turno: " + jugador.getNombre());
 		System.out.println("-----------------------------------------");
-		System.out.println("Carta en juego: ");
+		System.out.println(" Carta en juego: ");
 		System.out.println(mazo.devolverUltimoDescarte());
 		System.out.println("-----------------------------------------");
 		System.out.println("Tus cartas son: ");
 		jugador.mostrarMazo();
 		System.out.println("-----------------------------------------");
-		System.out.println("Seleccione la carta a jugar: ");
-		
-		int intentos = 1;
-		boolean jugo = false; //Luego se verifica si jugo o perdio sus 3 intentos (y debe agarrar una carta)
+		System.out.println("  0 - Pasar Turno -----------------------");
+		System.out.println(" 99 - Tomar Carta -----------------------");
+		System.out.println("-----------------------------------------");
+		System.out.print(" Seleccione la opcion a realizar: ");
+		int intentos = 1;		
 		while (intentos <= 3 && !jugo) {
 			int numero = EntradaConsola.tomarInt();
 			if (numero < 1 || numero > jugador.cantidadCartas()) { //Valida la carta que selecciona
@@ -269,7 +284,7 @@ public class Juego {
 		if (!jugo) {
 			System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 			jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
-			queCambio = cambiosDeTurno.PASA_TURNO;
+			queCambio = CambiosDeTurno.PASA_TURNO;
 			notificarObservadores();
 		}
 			
@@ -282,18 +297,12 @@ public class Juego {
 		eTipo caso = carta.getTipo();
 		switch (caso) {
 		case COMUN:
-			if (descarteEsComodin ()) {
-				validado = true;
-				queCambio = cambiosDeTurno.PASA_TURNO;
-				notificarObservadores(); // Notifica al observador lo que cambio
-			} else {
 				if (carta.getValor() == numeroEnJuego || carta.getColor() == colorEnJuego) {
 					validado = true;
-					queCambio = cambiosDeTurno.PASA_TURNO;
+					queCambio = CambiosDeTurno.PASA_TURNO;
 					notificarObservadores(); // Notifica al observador lo que cambio
 				} else
 					validado = false;
-			}
 			//break;
 		/*
 		case ROBA_2:
