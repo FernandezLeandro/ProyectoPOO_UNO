@@ -280,17 +280,17 @@ public class Juego {
 					if (numero == 0) {
 						jugadorPasaTurno();
 					} else { // Si no pasa turno, evalua su jugada
-						tomaCartaAValidar(numero,jugador,jugo);
-						/*
-						int intentos = 1;		
+						// ?? Si uso el metodo para simplificar codigo, puedo tirar por numeros pero no por color
+						//tomaCartaAValidar(numero,jugador,jugo); 
+						int intentos = 1;// El jugador tiene 3 intentos, caso contrario debe tomar una carta
 						while (intentos <= 3 && !jugo) {
 							if (numero < 0 || numero > jugador.cantidadCartas()) { //Valida la carta que selecciona
 								System.out.println("Numero erroneo, intente nuevamente: ");
-								numero = EntradaConsola.tomarInt();
+								numero = EntradaConsola.tomarInt(); // Falta en caso de que se equivoque, poder evaluar si pasa turno o toma carta
 							} else {
 								if (validarJugada (jugador.mostrarCarta(numero-1))) {
-									jugo = true;
-									tomoCarta = false;
+									jugo = true; //Al ya jugar no vuelve a entrar al ciclo
+									tomoCarta = false; // Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
 									mazo.addDescarte(jugador.mostrarCarta(numero-1)); // Agrega la carta jugada al descarte
 									jugador.darCarta(jugador.mostrarCarta(numero-1)); // Y la elimina del mazo del jugador
 									if (verificarGanador (jugador)) { // Verificara si gano
@@ -304,19 +304,18 @@ public class Juego {
 							}
 						}
 						if (!jugo) {
-							tomoCarta = false;
+							tomoCarta = false;// Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
 							System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 							jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
 							queCambio = CambiosDeTurno.PASA_TURNO;
 							notificarObservadores();
 						}
-						*/
 					}
 				}
 			}
-		} else {
-			tomaCartaAValidar(numero,jugador,jugo);
-			/*
+		} else { // Si selecciona una carta, es decir no toma ni pasa turno
+			//tomaCartaAValidar(numero,jugador,jugo);
+			
 			int intentos = 1;		
 			while (intentos <= 3 && !jugo) {
 				if (numero < 0 || numero > jugador.cantidadCartas()) { //Valida la carta que selecciona
@@ -344,43 +343,14 @@ public class Juego {
 				jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
 				queCambio = CambiosDeTurno.PASA_TURNO;
 				notificarObservadores();
-			}*/
-		}
-		/*
-		int intentos = 1;		
-		while (intentos <= 3 && !jugo) {
-			numero = EntradaConsola.tomarInt();
-			if (numero < 0 || numero > jugador.cantidadCartas()) { //Valida la carta que selecciona
-				System.out.println("Numero erroneo, intente nuevamente: ");
-				numero = EntradaConsola.tomarInt();
-			} else {
-				if (validarJugada (jugador.mostrarCarta(numero-1))) {
-					jugo = true;
-					mazo.addDescarte(jugador.mostrarCarta(numero-1)); // Agrega la carta jugada al descarte
-					jugador.darCarta(jugador.mostrarCarta(numero-1)); // Y la elimina del mazo del jugador
-					if (verificarGanador (jugador)) { // Verificara si gano
-						huboGanador();
-					}
-				} else {
-					System.out.println("Carta mal jugada, intente nuevamente: ");
-					intentos++;
-				}					
 			}
-		}
-		if (!jugo) {
-			System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
-			jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
-			queCambio = CambiosDeTurno.PASA_TURNO;
-			notificarObservadores();
-		}
-		*/
-			
+		}		
 	}
 
 	
 
 	private void tomaCartaAValidar(int numero, Jugador jugador, boolean jugo) {
-			int intentos = 1;		
+			int intentos = 1; 		
 			while (intentos <= 3 && !jugo) {
 				if (numero < 0 || numero > jugador.cantidadCartas()) { //Valida la carta que selecciona
 					System.out.println("Numero erroneo, intente nuevamente: ");
@@ -394,10 +364,6 @@ public class Juego {
 						if (verificarGanador (jugador)) { // Verificara si gano
 							huboGanador();
 						}
-						/*
-						queCambio = cambiosDeTurno.PASA_TURNO;
-						notificarObservadores(); // Notifica al observador lo que cambio
-						*/
 					} else {
 						System.out.println("Carta mal jugada, intente nuevamente: ");
 						numero = EntradaConsola.tomarInt();
@@ -415,7 +381,7 @@ public class Juego {
 	}
 
 	private void jugadorPasaTurno() {
-		tomoCarta = false;
+		tomoCarta = false;// Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
 		queCambio = CambiosDeTurno.PASA_TURNO;
 		notificarObservadores();
 	}
@@ -443,13 +409,13 @@ public class Juego {
 					validado = false;
 			break;
 		case ROBA_2:
-			if (colorEnJuego == carta.getColor()) {
-				queCambio = CambiosDeTurno.PASA_TURNO;
+			if (colorEnJuego == carta.getColor()) {//Debe ser del mismo color
+				queCambio = CambiosDeTurno.PASA_TURNO; //Informa al sistema de turnos 
 				notificarObservadores();
 				System.out.println("-----------------------------------------");
 				System.out.println("El jugador " + turno.turnoDe().getNombre() + " debe tomar dos cartas y pierde el turno.");
 				System.out.println("-----------------------------------------");
-				jugadorTomaNCartas (turno.turnoDe(), 2);
+				jugadorTomaNCartas (turno.turnoDe(), 2);// Le da las dos cartas y como perdio su turno, sigue el siguiente a él
 				queCambio = CambiosDeTurno.PASA_TURNO;
 				notificarObservadores();
 				validado = true;
