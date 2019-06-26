@@ -19,9 +19,7 @@ public class Prueba {
 		j1.nuevaCarta(mz.darCarta());
 		//j1.mostrarMazo();
 		*/
-		//Juego motor = new Juego();
-		Random r = new Random ();
-		System.out.println(r.nextInt(1));
+		Juego motor = new Juego();
 
 	}
 
