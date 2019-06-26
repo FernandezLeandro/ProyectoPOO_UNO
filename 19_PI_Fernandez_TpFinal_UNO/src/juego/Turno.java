@@ -47,11 +47,20 @@ public class Turno implements IObservador{
 			break;
 		case CAMBIO_RONDA:
 			if (direccionRonda == EstadoRonda.DERECHA) { // Si va hacia la derecha
-				direccionRonda = EstadoRonda.IZQUIERDA; // Cambia la ronda y le asigna el turno al siguiente
-				pasaTurno();
+				if (turnoJugadores.size() == 2) {
+					direccionRonda = EstadoRonda.IZQUIERDA; // Cambia la ronda y le asigna el turno al siguiente
+				} else {
+					direccionRonda = EstadoRonda.IZQUIERDA; // Cambia la ronda y le asigna el turno al siguiente
+					pasaTurno();
+				}
+				
 			} else { // Caso de que la ronda va hacia la izquierda
-				direccionRonda = EstadoRonda.DERECHA;
-				pasaTurno();
+				if (turnoJugadores.size() == 2) {
+					direccionRonda = EstadoRonda.DERECHA; // Cambia la ronda y le asigna el turno al siguiente
+				} else {
+					direccionRonda = EstadoRonda.DERECHA; // Cambia la ronda y le asigna el turno al siguiente
+					pasaTurno();
+				}
 			}
 			break;
 		}

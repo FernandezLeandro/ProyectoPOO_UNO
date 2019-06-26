@@ -23,7 +23,7 @@ public class Juego {
 	private Mazo mazo = new Mazo ();
 	private Turno turno; 
 	private eTipo tipoEnJuego; // Administran la carta que esta en juego
-	private eColor colorEnJuego;	
+	private eColor colorEnJuego, nuevoColor;	
 	private int numeroEnJuego;
 	private eColor [] colores = new eColor [4];// Arreglo para cuando la primera carta sea el comodin y genere un color al azar
 	private boolean tomoCarta; // Verifica si ya tomo carta, para que no tome mas de una por turno.
@@ -87,26 +87,46 @@ public class Juego {
 			notificarObservadores();
 			break;
 		case PIERDE_TURNO: // El jugador en turno no puede jugar
-			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
-			queCambio = CambiosDeTurno.PASA_TURNO;
-			notificarObservadores();
+			jugadorSalteaTurno ();
+			
 			break;
 		case CAMBIO_SENTIDO:
+			jugadorCambiaSentidoRonda();
+			/*
 			System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
 			queCambio = CambiosDeTurno.CAMBIO_RONDA;
 			notificarObservadores();
+			*/
 			break;
 		case COMODIN_ROBA_4: // El jugador en turno toma 4 cartas y pierde su turno
+			nuevoColor = generarColorAzar ();
+			colorEnJuego = nuevoColor;
 			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 4 cartas y pierde el turno");
-			System.out.println("El nuevo color en juego es: " + generarColorAzar()); 
+			System.out.println("El nuevo color en juego es: " + nuevoColor); 
 			jugadorTomaNCartas (turno.turnoDe(), 4);
 			queCambio = CambiosDeTurno.PASA_TURNO;
 			notificarObservadores();
 			break;
 		case COMODIN:
-			System.out.println("El nuevo color en juego es: " + generarColorAzar());
+			nuevoColor = generarColorAzar ();
+			colorEnJuego = nuevoColor;
+			System.out.println("El nuevo color en juego es: " + nuevoColor);
 			break;
 		}
+	}
+
+	private void jugadorCambiaSentidoRonda() {
+		System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
+		queCambio = CambiosDeTurno.CAMBIO_RONDA;
+		notificarObservadores();
+	}
+
+	private void jugadorSalteaTurno() {
+		System.out.println("-----------------------------------------");
+		System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
+		System.out.println("-----------------------------------------");
+		queCambio = CambiosDeTurno.PASA_TURNO;
+		notificarObservadores();
 	}
 
 	private eColor generarColorAzar() { // Genera un color al azar (sin contar el especial)
@@ -292,6 +312,7 @@ public class Juego {
 									jugo = true; //Al ya jugar no vuelve a entrar al ciclo
 									tomoCarta = false; // Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
 									mazo.addDescarte(jugador.mostrarCarta(numero-1)); // Agrega la carta jugada al descarte
+									cambiaCartaEnJuego (mazo.devolverUltimoDescarte());
 									jugador.darCarta(jugador.mostrarCarta(numero-1)); // Y la elimina del mazo del jugador
 									if (verificarGanador (jugador)) { // Verificara si gano
 										huboGanador();
@@ -326,6 +347,7 @@ public class Juego {
 						jugo = true;
 						tomoCarta = false;
 						mazo.addDescarte(jugador.mostrarCarta(numero-1)); // Agrega la carta jugada al descarte
+						cambiaCartaEnJuego (mazo.devolverUltimoDescarte());
 						jugador.darCarta(jugador.mostrarCarta(numero-1)); // Y la elimina del mazo del jugador
 						if (verificarGanador (jugador)) { // Verificara si gano
 							huboGanador();
@@ -360,6 +382,7 @@ public class Juego {
 						jugo = true;
 						tomoCarta = false;
 						mazo.addDescarte(jugador.mostrarCarta(numero-1)); // Agrega la carta jugada al descarte
+						cambiaCartaEnJuego (mazo.devolverUltimoDescarte());
 						jugador.darCarta(jugador.mostrarCarta(numero-1)); // Y la elimina del mazo del jugador
 						if (verificarGanador (jugador)) { // Verificara si gano
 							huboGanador();
@@ -401,7 +424,7 @@ public class Juego {
 		eTipo caso = carta.getTipo();
 		switch (caso) {
 		case COMUN:
-				if (carta.getValor() == numeroEnJuego | carta.getColor() == colorEnJuego) {
+				if (carta.getValor() == numeroEnJuego || carta.getColor() == colorEnJuego) {
 					validado = true;
 					queCambio = CambiosDeTurno.PASA_TURNO;
 					notificarObservadores(); // Notifica al observador lo que cambio
@@ -409,7 +432,7 @@ public class Juego {
 					validado = false;
 			break;
 		case ROBA_2:
-			if (colorEnJuego == carta.getColor()) {//Debe ser del mismo color
+			if (colorEnJuego == carta.getColor() || tipoEnJuego == carta.getTipo()) {//Debe ser del mismo color
 				queCambio = CambiosDeTurno.PASA_TURNO; //Informa al sistema de turnos 
 				notificarObservadores();
 				System.out.println("-----------------------------------------");
@@ -422,13 +445,29 @@ public class Juego {
 			} else
 				validado = false;
 			break;
-		/*
+		
 		case PIERDE_TURNO:
-			
+			if (colorEnJuego == carta.getColor() || tipoEnJuego == carta.getTipo()) {
+				queCambio = CambiosDeTurno.PASA_TURNO;
+				notificarObservadores();
+				System.out.println("-----------------------------------------");
+				System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
+				System.out.println("-----------------------------------------");
+				queCambio = CambiosDeTurno.PASA_TURNO;
+				notificarObservadores();
+				validado = true;
+			} else
+				validado = false;
 			break;
+		
 		case CAMBIO_SENTIDO:
-			
+			if (colorEnJuego == carta.getColor() || tipoEnJuego == carta.getTipo()) {
+				jugadorCambiaSentidoRonda();
+				validado = true;
+			} else
+				validado = false;
 			break;
+			/*
 		case COMODIN_ROBA_4:
 			
 			break;
