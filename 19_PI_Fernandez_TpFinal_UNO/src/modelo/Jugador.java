@@ -1,9 +1,9 @@
-package juego;
+package modelo;
 
 import java.util.ArrayList;
 
-import cartas.Carta;
-import cartas.eTipo;
+import modelo.cartas.Carta;
+import modelo.cartas.eTipo;
 
 /**
  * Clase: Jugador

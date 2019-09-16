@@ -1,4 +1,4 @@
-package juego;
+package modelo;
 
 import java.util.ArrayList;
 

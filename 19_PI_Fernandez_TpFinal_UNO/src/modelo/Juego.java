@@ -1,4 +1,4 @@
-package juego;
+package modelo;
 
 /**
  * Clase : Juego
@@ -9,10 +9,10 @@ package juego;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cartas.Carta;
-import cartas.Mazo;
-import cartas.eColor;
-import cartas.eTipo;
+import modelo.cartas.Carta;
+import modelo.cartas.Mazo;
+import modelo.cartas.eColor;
+import modelo.cartas.eTipo;
 
 public class Juego {
 	private ArrayList <Jugador> listaJugadores = new ArrayList <Jugador> ();

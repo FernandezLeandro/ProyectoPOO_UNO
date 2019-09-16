@@ -1,4 +1,4 @@
-package cartas;
+package modelo.cartas;
 /**
  * Enumerado: eTipo
  * Define los tipos de cartas que hay en el juego, las comunes

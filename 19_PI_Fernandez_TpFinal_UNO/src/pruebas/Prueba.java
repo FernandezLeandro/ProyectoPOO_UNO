@@ -2,9 +2,9 @@ package pruebas;
 
 import java.util.Random;
 
-import cartas.Mazo;
-import juego.Juego;
-import juego.Jugador;
+import modelo.Juego;
+import modelo.Jugador;
+import modelo.cartas.Mazo;
 
 public class Prueba {
 

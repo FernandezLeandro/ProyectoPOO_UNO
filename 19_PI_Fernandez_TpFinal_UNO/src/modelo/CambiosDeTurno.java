@@ -1,4 +1,4 @@
-package juego;
+package modelo;
 /**
  * Enumerado Cambios de turno
  * Este enumerado tendra los eventos sucedidos en pleno juego, que tendran efecto a los turnos de los jugadores

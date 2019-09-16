@@ -1,4 +1,4 @@
-package cartas;
+package modelo.cartas;
 
 import java.util.ArrayList;
 import java.util.Random;
