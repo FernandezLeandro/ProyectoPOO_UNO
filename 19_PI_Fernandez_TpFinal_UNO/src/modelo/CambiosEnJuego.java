@@ -5,8 +5,9 @@ package modelo;
  * @author Leandro Fernandez
  * @version 1.0 - 24/06/19
  */
-public enum CambiosDeTurno {
+public enum CambiosEnJuego {
 	PASA_TURNO,
 	SALTEA_TURNO,
-	CAMBIO_RONDA
+	CAMBIO_RONDA,
+	menuPrinc
 }

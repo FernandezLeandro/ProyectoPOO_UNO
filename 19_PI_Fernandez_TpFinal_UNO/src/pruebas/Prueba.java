@@ -2,25 +2,20 @@ package pruebas;
 
 import java.util.Random;
 
+import controlador.Controlador;
+import vista.IVista;
 import modelo.Juego;
 import modelo.Jugador;
 import modelo.cartas.Mazo;
+import vista.consola.VistaConsola;
 
 public class Prueba {
 
-	public static void main(String[] args) {
-		Jugador j1 = new Jugador ("Leandro");
-		Mazo mz = new Mazo ();
-		//mz.mezclarMazo();
-		//mz.mostrarMazo();
-		/*
-		j1.nuevaCarta(mz.darCarta());
-		j1.nuevaCarta(mz.darCarta());
-		j1.nuevaCarta(mz.darCarta());
-		//j1.mostrarMazo();
-		*/
-		Juego motor = new Juego();
-
-	}
+	/*public static void main(String[] args) {
+		IVista vista = new VistaConsola();
+        Controlador c = new Controlador(vista);
+        Juego juego = new Juego();
+        //juego.ejecutarJuego();
+	}*/
 
 }

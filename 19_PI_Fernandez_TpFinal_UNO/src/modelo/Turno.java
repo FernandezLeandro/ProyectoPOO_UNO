@@ -15,7 +15,7 @@ public class Turno implements IObservador{
 	}
 
 	@Override
-	public void cambiosTurno(CambiosDeTurno cambio) {
+	public void cambiosJuego(CambiosEnJuego cambio) {
 		switch (cambio) {
 		case PASA_TURNO:
 			pasaTurno();	
@@ -82,4 +82,6 @@ public class Turno implements IObservador{
 	private int ultimoJugador () {
 		return turnoJugadores.size()-1;
 	}
+
+
 }

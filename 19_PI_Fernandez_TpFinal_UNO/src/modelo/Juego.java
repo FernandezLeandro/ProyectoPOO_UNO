@@ -17,9 +17,9 @@ import modelo.cartas.eTipo;
 public class Juego {
 	private ArrayList <Jugador> listaJugadores = new ArrayList <Jugador> ();
 	private ArrayList<IObservador> observadores = new ArrayList<>();
-	CambiosDeTurno queCambio;
+	CambiosEnJuego queCambio;
 	private boolean termino = false;
-	private int puntajeMAX = 500;
+	public int puntajeMAX = 500;
 	private Mazo mazo = new Mazo ();
 	private Turno turno; 
 	private eTipo tipoEnJuego; // Administran la carta que esta en juego
@@ -29,12 +29,12 @@ public class Juego {
 	private boolean tomoCarta; // Verifica si ya tomo carta, para que no tome mas de una por turno.
 	boolean hayGanador = false;
 	public Juego () {
-		ejecutarJuego ();
+		//ejecutarJuego ();
 	}
 	
 	private void notificarObservadores() {
 		for (IObservador o : observadores)
-			o.cambiosTurno(queCambio); // Se notifica cada vez que hay un cambio en los turnos
+			o.cambiosJuego(queCambio); // Se notifica cada vez que hay un cambio en los turnos
 	}
 	
 	private void agregarJugador(String jugador) {
@@ -83,7 +83,7 @@ public class Juego {
 		case ROBA_2: // El jugador en turno toma dos cartas y pierde su turno
 			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 2 cartas y pierde el turno");
 			jugadorTomaNCartas (turno.turnoDe(), 2);
-			queCambio = CambiosDeTurno.PASA_TURNO;
+			queCambio = CambiosEnJuego.PASA_TURNO;
 			notificarObservadores();
 			break;
 		case PIERDE_TURNO: // El jugador en turno no puede jugar
@@ -104,7 +104,7 @@ public class Juego {
 			System.out.println("El jugador " + turno.turnoDe().getNombre() + ", agarra 4 cartas y pierde el turno");
 			System.out.println("El nuevo color en juego es: " + nuevoColor); 
 			jugadorTomaNCartas (turno.turnoDe(), 4);
-			queCambio = CambiosDeTurno.PASA_TURNO;
+			queCambio = CambiosEnJuego.PASA_TURNO;
 			notificarObservadores();
 			break;
 		case COMODIN:
@@ -117,7 +117,7 @@ public class Juego {
 
 	private void jugadorCambiaSentidoRonda() {
 		System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
-		queCambio = CambiosDeTurno.CAMBIO_RONDA;
+		queCambio = CambiosEnJuego.CAMBIO_RONDA;
 		notificarObservadores();
 	}
 
@@ -125,7 +125,7 @@ public class Juego {
 		System.out.println("-----------------------------------------");
 		System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
 		System.out.println("-----------------------------------------");
-		queCambio = CambiosDeTurno.PASA_TURNO;
+		queCambio = CambiosEnJuego.PASA_TURNO;
 		notificarObservadores();
 	}
 
@@ -177,10 +177,12 @@ public class Juego {
 	}
 	
 	
-	private void ejecutarJuego() {
+	public void ejecutarJuego() {
 		while (!termino) {
 			char opcion;
-			mostrarMenuPrincipal();
+			queCambio = CambiosEnJuego.menuPrinc;
+			notificarObservadores ();
+			//mostrarMenuPrincipal();
 			opcion = EntradaConsola.tomarOpcion(); // A la espera de la eleccion de una opcion
 			switch (opcion) {
 			case '1':// Agrega un jugador
@@ -244,14 +246,17 @@ public class Juego {
 		}
 	}
 
-
+	public void agregarObservador (IObservador observador) {
+		observadores.add(observador);
+	}
 	private void comenzarRonda() {
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		System.out.println("*---------- JUEGO EN CURSO -------------*");
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		repartirMazo();
 		turno = new Turno (listaJugadores);
-		observadores.add(turno);
+		//observadores.add(turno);
+		agregarObservador (turno);
 		System.out.println(" Carta en juego: ");
 		System.out.println(mazo.devolverUltimoDescarte());
 		evaluarCartaEnJuego ();
@@ -328,7 +333,7 @@ public class Juego {
 							tomoCarta = false;// Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
 							System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 							jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
-							queCambio = CambiosDeTurno.PASA_TURNO;
+							queCambio = CambiosEnJuego.PASA_TURNO;
 							notificarObservadores();
 						}
 					}
@@ -363,7 +368,7 @@ public class Juego {
 				tomoCarta = false;
 				System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 				jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
-				queCambio = CambiosDeTurno.PASA_TURNO;
+				queCambio = CambiosEnJuego.PASA_TURNO;
 				notificarObservadores();
 			}
 		}		
@@ -398,14 +403,14 @@ public class Juego {
 				tomoCarta = false;
 				System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 				jugador.nuevaCarta(mazo.darCarta()); // Como perdio sus 3 intentos debe tomar una carta
-				queCambio = CambiosDeTurno.PASA_TURNO;
+				queCambio = CambiosEnJuego.PASA_TURNO;
 				notificarObservadores();
 			}
 	}
 
 	private void jugadorPasaTurno() {
 		tomoCarta = false;// Coloca false para el proximo turno, sino no dejara tomar carta al siguiente
-		queCambio = CambiosDeTurno.PASA_TURNO;
+		queCambio = CambiosEnJuego.PASA_TURNO;
 		notificarObservadores();
 	}
 
@@ -426,20 +431,20 @@ public class Juego {
 		case COMUN:
 				if (carta.getValor() == numeroEnJuego || carta.getColor() == colorEnJuego) {
 					validado = true;
-					queCambio = CambiosDeTurno.PASA_TURNO;
+					queCambio = CambiosEnJuego.PASA_TURNO;
 					notificarObservadores(); // Notifica al observador lo que cambio
 				} else
 					validado = false;
 			break;
 		case ROBA_2:
 			if (colorEnJuego == carta.getColor() || tipoEnJuego == carta.getTipo()) {//Debe ser del mismo color
-				queCambio = CambiosDeTurno.PASA_TURNO; //Informa al sistema de turnos 
+				queCambio = CambiosEnJuego.PASA_TURNO; //Informa al sistema de turnos 
 				notificarObservadores();
 				System.out.println("-----------------------------------------");
 				System.out.println("El jugador " + turno.turnoDe().getNombre() + " debe tomar dos cartas y pierde el turno.");
 				System.out.println("-----------------------------------------");
 				jugadorTomaNCartas (turno.turnoDe(), 2);// Le da las dos cartas y como perdio su turno, sigue el siguiente a él
-				queCambio = CambiosDeTurno.PASA_TURNO;
+				queCambio = CambiosEnJuego.PASA_TURNO;
 				notificarObservadores();
 				validado = true;
 			} else
@@ -448,12 +453,12 @@ public class Juego {
 		
 		case PIERDE_TURNO:
 			if (colorEnJuego == carta.getColor() || tipoEnJuego == carta.getTipo()) {
-				queCambio = CambiosDeTurno.PASA_TURNO;
+				queCambio = CambiosEnJuego.PASA_TURNO;
 				notificarObservadores();
 				System.out.println("-----------------------------------------");
 				System.out.println("El jugador " + turno.turnoDe().getNombre() + ", es salteado, pierde el turno.");
 				System.out.println("-----------------------------------------");
-				queCambio = CambiosDeTurno.PASA_TURNO;
+				queCambio = CambiosEnJuego.PASA_TURNO;
 				notificarObservadores();
 				validado = true;
 			} else
