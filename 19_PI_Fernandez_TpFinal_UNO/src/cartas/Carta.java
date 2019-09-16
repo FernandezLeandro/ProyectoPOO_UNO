@@ -6,6 +6,14 @@ package cartas;
  * @author Leandro Fernández
  * @version 1.0.1 - 17/06/2019 
  */
+
+/* CONSIDERACIONES GENERALES
+	- El mazo de descartes, podria utilizar una estructura PILA 
+	- En la creacion del mazo, se podria optimizar (observar la variable p tambien)
+	- mostrarUltimoDescarte () podria directamente mostrar una carta X, y pasarle por parametro la carta a mostrar
+	
+*/
+
 public class Carta {
 	private eColor color;
 	private int valor;
