@@ -6,6 +6,7 @@ import modelo.CambiosEnJuego;
 import modelo.IObservador;
 import modelo.Juego;
 import modelo.Jugador;
+import modelo.cartas.eColor;
 import vista.IVista;
 import vista.consola.VistaConsola;
 
@@ -46,6 +47,9 @@ public class Controlador  implements IObservador{
 		juego.actualizarPtosMax(ptos);
 	}
 	
+	public eColor obtenerNewColor () {
+		return juego.getNuevoColor();
+	}
 	@Override
 	public void cambiosJuego(CambiosEnJuego cambio) {
 		switch (cambio) {
@@ -77,6 +81,29 @@ public class Controlador  implements IObservador{
 		case modificarPtosMax:
 			vista.modificarPtosMax(juego.getPuntajeMIN());
 			break;
+		case comienzaRonda:
+			vista.mostrarComienzaRonda();
+			break;
+		case mostrarUltimoDescarte: 
+			vista.mostrarUltimoDescarte(juego.ultimoDescarte());
+			break;
+		case seCambiaTurno:
+			vista.cambioEnTurno(juego.turnoActualDe(), juego.getTipoEnJuego());
+			break;
+		case nuevoColor:
+			vista.nuevoColor(juego.getNuevoColor());
+			break;
+		case minDosJug:
+			vista.faltanJugadores();
+			break;
+		case Help:
+			vista.mostrarAyuda(juego.mostrarAyuda());
+			break;
+		case finalizar:
+			vista.finalizar();
+			break;
+		case opcionInvalida:
+			vista.opcionInvalida();
 		}
 	}
 }

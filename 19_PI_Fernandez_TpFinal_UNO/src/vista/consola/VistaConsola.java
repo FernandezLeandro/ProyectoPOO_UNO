@@ -6,6 +6,9 @@ import controlador.Controlador;
 import modelo.EntradaConsola;
 import modelo.Juego;
 import modelo.Jugador;
+import modelo.cartas.Carta;
+import modelo.cartas.eColor;
+import modelo.cartas.eTipo;
 import vista.IVista;
 
 public class VistaConsola implements IVista{
@@ -111,6 +114,74 @@ public class VistaConsola implements IVista{
 				puntaje = EntradaConsola.tomarInt();
 		}
 		controlador.actualizarPtosMaximos(puntaje);
+	}
+
+	@Override
+	public void mostrarComienzaRonda() {
+		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		System.out.println("*---------- JUEGO EN CURSO -------------*");
+		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		System.out.println(" Carta en juego: ");
+	}
+
+	@Override
+	public void mostrarUltimoDescarte(Carta carta) {
+		carta.toString();
+	}
+
+	@Override
+	public void cambioEnTurno(Jugador jugador, eTipo tipo) {
+		switch (tipo) {
+		case ROBA_2:
+			System.out.println("-----------------------------------------");
+			System.out.println("El jugador " + jugador.getNombre() + ", agarra 2 cartas y pierde el turno");
+			System.out.println("-----------------------------------------");
+			break;
+		case PIERDE_TURNO:
+			System.out.println("-----------------------------------------");
+			System.out.println("El jugador " + jugador.getNombre() + ", es salteado, pierde el turno.");
+			System.out.println("-----------------------------------------");
+			break;
+			
+		case CAMBIO_SENTIDO:
+			System.out.println("-----------------------------------------");
+			System.out.println("SE CAMBIA EL SENTIDO DE LA RONDA.");
+			System.out.println("-----------------------------------------");
+			break;
+			
+		case COMODIN_ROBA_4:
+			System.out.println("El jugador " + jugador.getNombre() + ", agarra 4 cartas y pierde el turno");
+			nuevoColor (controlador.obtenerNewColor());
+			break;
+		}
+		
+	}
+
+	@Override
+	public void nuevoColor(eColor nuevoColor) {
+		System.out.println("El nuevo color en juego es: " + nuevoColor);
+	}
+
+	@Override
+	public void faltanJugadores() {
+		System.out.println("-----------------------------------------");
+		System.out.println("Se necesitan minimo dos jugadores para comenzar.");
+		System.out.println("-----------------------------------------");
+	}
+
+	@Override
+	public void mostrarAyuda(String st) {
+		System.out.println(st);
+	}
+
+	@Override
+	public void finalizar() {
+		System.out.println("XXXXX Ejecución finalizada XXXXX");
+	}
+
+	@Override
+	public void opcionInvalida() {
+		System.out.println("ERROR: Ingrese una opción válida.");
 	}
 	
 	

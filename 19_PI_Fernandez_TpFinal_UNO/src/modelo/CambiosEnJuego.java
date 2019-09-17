@@ -14,5 +14,13 @@ public enum CambiosEnJuego {
 	sinJug,
 	mostrarJugadores,
 	eliminarJug,
-	modificarPtosMax
+	modificarPtosMax,
+	comienzaRonda,
+	mostrarUltimoDescarte,
+	seCambiaTurno,
+	nuevoColor,
+	minDosJug,
+	Help,
+	finalizar,
+	opcionInvalida
 }
