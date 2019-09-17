@@ -27,4 +27,6 @@ public interface IVista {
 	void mostrarAyuda (String st);
 	void finalizar ();
 	void opcionInvalida();
+	void mostrarJugadorEnTurno (Jugador jugador);
+	void mostrarCartasJug (ArrayList <Carta> cartas);
 }

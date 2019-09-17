@@ -121,12 +121,14 @@ public class VistaConsola implements IVista{
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		System.out.println("*---------- JUEGO EN CURSO -------------*");
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-		System.out.println(" Carta en juego: ");
+		//System.out.println(" Carta en juego: ");
+
 	}
 
 	@Override
 	public void mostrarUltimoDescarte(Carta carta) {
-		carta.toString();
+		System.out.println(" Carta en juego: ");
+		System.out.println(carta.toString());
 	}
 
 	@Override
@@ -182,6 +184,28 @@ public class VistaConsola implements IVista{
 	@Override
 	public void opcionInvalida() {
 		System.out.println("ERROR: Ingrese una opción válida.");
+	}
+
+	@Override
+	public void mostrarJugadorEnTurno(Jugador jugador) {
+		System.out.println("-----------------------------------------");
+		System.out.println(" Jugador en turno: " + jugador.getNombre());
+		System.out.println("-----------------------------------------");
+	}
+
+	@Override
+	public void mostrarCartasJug(ArrayList <Carta> cartas) {
+		System.out.println("-----------------------------------------");
+		System.out.println("Tus cartas son: ");
+		System.out.println("-----------------------------------------");
+		int i = 1; // Valor con que se lo podra manipular en consola
+		for (Carta c : cartas) {// Muestra la lista de cartas
+			if (c.getTipo() == eTipo.COMUN) {
+				System.out.println(i++ + " - " + c.mostrarComun()); 
+			} else
+				System.out.println(i++ + " - " + c.mostrarEspecial()); 
+		}	
+		System.out.println("-----------------------------------------");
 	}
 	
 	

@@ -52,6 +52,10 @@ public class Jugador {
 		}		
 	}
 	
+	public ArrayList<Carta> getMisCartas() {
+		return misCartas;
+	}
+
 	public int getPuntos () { // Obtiene puntos segun las cartas de su mazo
 		int ptos = 0;
 		if (misCartas.isEmpty()) { // Si esta vacio devuelve 0

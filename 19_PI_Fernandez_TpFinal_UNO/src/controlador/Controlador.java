@@ -104,6 +104,12 @@ public class Controlador  implements IObservador{
 			break;
 		case opcionInvalida:
 			vista.opcionInvalida();
+		case mostrarJugEnTurno:
+			vista.mostrarJugadorEnTurno(juego.turnoActualDe());
+			break;
+		case mostrarCartasJug:
+			vista.mostrarCartasJug(juego.cartasJugadorActual());
+			break;
 		}
 	}
 }

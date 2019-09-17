@@ -22,5 +22,7 @@ public enum CambiosEnJuego {
 	minDosJug,
 	Help,
 	finalizar,
-	opcionInvalida
+	opcionInvalida,
+	mostrarJugEnTurno,
+	mostrarCartasJug
 }

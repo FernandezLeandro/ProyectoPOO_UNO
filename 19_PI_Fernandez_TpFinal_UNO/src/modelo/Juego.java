@@ -126,7 +126,7 @@ public class Juego {
 			pasaTurno ();
 			break;
 			
-		case CAMBIO_SENTIDO:
+		case CAMBIO_SENTIDO: // Se cambia el sentido de la ronda
 			queCambio = CambiosEnJuego.seCambiaTurno;
 			notificarObservadores ();
 			CambiaSentidoRonda();
@@ -275,6 +275,7 @@ public class Juego {
 	public void agregarObservador (IObservador observador) {
 		observadores.add(observador);
 	}
+	
 	private void comenzarRonda() {
 		// Primero reparte el mazo a cada uno de los jugadores
 		repartirMazo();
@@ -291,7 +292,7 @@ public class Juego {
 		evaluarCartaEnJuego ();
 		while (!hayGanador) {	
 			//tomoCarta = false;
-			menuDeJuego (turno.turnoDe());
+			menuDeJuego (turnoActualDe ());
 			
 		}
 		
@@ -307,13 +308,16 @@ public class Juego {
 
 	private void menuDeJuego(Jugador jugador) {
 		boolean jugo = false; //Luego se verifica si jugo o perdio sus 3 intentos (y debe agarrar una carta)
-		System.out.println("-----------------------------------------");
-		System.out.println(" Jugador en turno: " + jugador.getNombre());
-		System.out.println("-----------------------------------------");
-		System.out.println(" Carta en juego: ");
-		System.out.println(mazo.devolverUltimoDescarte());
-		System.out.println("-----------------------------------------");
-		mostrarCartasJugador (jugador);
+		// Muestra el jugador actual en turno
+		queCambio = CambiosEnJuego.mostrarJugEnTurno;
+		notificarObservadores ();
+		// Y muestra el ultimo descarte
+		queCambio = CambiosEnJuego.mostrarUltimoDescarte;
+		notificarObservadores ();
+		// muestra las cartas del jugador en turno
+		queCambio = CambiosEnJuego.mostrarCartasJug;
+		notificarObservadores ();
+		
 		System.out.println("-----------------------------------------");
 		System.out.println("  0 - Pasar Turno -----------------------");
 		if (!tomoCarta) { // Solo permite tomar carta si aun no ha tomado ninguna
@@ -412,6 +416,10 @@ public class Juego {
 	}
 
 	
+
+	public ArrayList <Carta> cartasJugadorActual() {
+		return turnoActualDe ().getMisCartas();
+	}
 
 	private void tomaCartaAValidar(int numero, Jugador jugador, boolean jugo) {
 			int intentos = 1; 		
