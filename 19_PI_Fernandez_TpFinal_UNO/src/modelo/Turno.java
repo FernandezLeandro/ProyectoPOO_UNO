@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Turno implements IObservador{
+public class Turno implements IObservadorTurno {
 	private ArrayList <Jugador> turnoJugadores;
 	int jugadorEnTurno = 0;
 	EstadoRonda direccionRonda = EstadoRonda.DERECHA; // Por defecto la ronda va hacia la derecha
@@ -15,7 +15,7 @@ public class Turno implements IObservador{
 	}
 
 	@Override
-	public void cambiosJuego(CambiosEnJuego cambio) {
+	public void cambiosEnTurno(CambiosEnTurno cambio) {
 		switch (cambio) {
 		case PASA_TURNO:
 			pasaTurno();	

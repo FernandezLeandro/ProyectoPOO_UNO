@@ -6,8 +6,13 @@ package modelo;
  * @version 1.0 - 24/06/19
  */
 public enum CambiosEnJuego {
-	PASA_TURNO,
-	SALTEA_TURNO,
-	CAMBIO_RONDA,
-	menuPrinc
+	menuPrinc,
+	tomarOpcion,
+	tomarInt,
+	agregarJug,
+	jugCompletos,
+	sinJug,
+	mostrarJugadores,
+	eliminarJug,
+	modificarPtosMax
 }
