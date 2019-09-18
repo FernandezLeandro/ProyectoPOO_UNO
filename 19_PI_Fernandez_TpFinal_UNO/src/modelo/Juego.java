@@ -23,13 +23,8 @@ public class Juego {
 	private boolean termino = false;
 	public int puntajeMAX = 500;
 	private int puntajeMIN = 250;
-	public int getPuntajeMIN() {
-		return puntajeMIN;
-	}
+	
 
-	public void setPuntajeMIN(int puntajeMIN) {
-		this.puntajeMIN = puntajeMIN;
-	}
 
 	private Mazo mazo = new Mazo ();
 	private Turno turno; 
@@ -45,6 +40,14 @@ public class Juego {
 		//ejecutarJuego ();
 	}
 	
+	public int getPuntajeMIN() {
+		return puntajeMIN;
+	}
+
+	public void setPuntajeMIN(int puntajeMIN) {
+		this.puntajeMIN = puntajeMIN;
+	}
+
 	public void setOpcion(char opcion) {
 		this.opcion = opcion;
 	}
@@ -111,7 +114,12 @@ public class Juego {
 	public Jugador turnoActualDe () {
 		return turno.turnoDe();
 	}
+	
 	private void evaluarCartaEnJuego() { //Evalua la carta actual que esta en juego
+		/*
+		 * Faltaria evaluar si la carta es comun, es decir al arrancar el juego 
+		 * no hace falta hacer nada, sigue normalmente
+		 */
 		switch (tipoEnJuego) {
 		case ROBA_2: // El jugador en turno toma dos cartas y pierde su turno
 			queCambio = CambiosEnJuego.seCambiaTurno;
@@ -218,8 +226,7 @@ public class Juego {
 					// Si esta llena la lista de jugadores, notificarlo
 					queCambio = CambiosEnJuego.jugCompletos;
 					notificarObservadores ();
-				}
-				
+				}				
 				break;
 				
 			case '2': // Elimina un jugador
@@ -244,9 +251,8 @@ public class Juego {
 			case '4': // Modificar el puntaje maximo de juego
 				queCambio = CambiosEnJuego.modificarPtosMax;
 				notificarObservadores ();
-				
-
 				break;
+				
 			case '5': // Comienzo del juego
 				if (listaJugadores.size() >= 2) {
 					comenzarRonda();
@@ -255,10 +261,12 @@ public class Juego {
 					notificarObservadores ();
 				}
 				break;
+				
 			case '6':
 				queCambio = CambiosEnJuego.Help;
 				notificarObservadores ();
 				break;
+				
 			case '9': 
 				queCambio = CambiosEnJuego.finalizar;
 				notificarObservadores ();
@@ -317,6 +325,7 @@ public class Juego {
 		// muestra las cartas del jugador en turno
 		queCambio = CambiosEnJuego.mostrarCartasJug;
 		notificarObservadores ();
+		
 		
 		System.out.println("-----------------------------------------");
 		System.out.println("  0 - Pasar Turno -----------------------");
