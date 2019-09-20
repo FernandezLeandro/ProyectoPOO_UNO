@@ -134,6 +134,9 @@ public class VistaConsola implements IVista{
 	@Override
 	public void cambioEnTurno(Jugador jugador, eTipo tipo) {
 		switch (tipo) {
+		case COMUN:
+			System.out.println("COMUUUUUUUUUUUUUUUUUUUUUUUN");
+			break;
 		case ROBA_2:
 			System.out.println("-----------------------------------------");
 			System.out.println("El jugador " + jugador.getNombre() + ", agarra 2 cartas y pierde el turno");
@@ -154,6 +157,9 @@ public class VistaConsola implements IVista{
 		case COMODIN_ROBA_4:
 			System.out.println("El jugador " + jugador.getNombre() + ", agarra 4 cartas y pierde el turno");
 			nuevoColor (controlador.obtenerNewColor());
+			break;
+		default:
+			System.out.println("ERROR");
 			break;
 		}
 		
@@ -206,6 +212,33 @@ public class VistaConsola implements IVista{
 				System.out.println(i++ + " - " + c.mostrarEspecial()); 
 		}	
 		System.out.println("-----------------------------------------");
+	}
+
+	@Override
+	public void opcionesJug(boolean tomoCarta) {
+		System.out.println("-----------------------------------------");
+		System.out.println("  0 - Pasar Turno -----------------------");
+		if (!tomoCarta) { // Solo permite tomar carta si aun no ha tomado ninguna
+			System.out.println(" 99 - Tomar Carta -----------------------");
+		}
+		System.out.println("-----------------------------------------");
+	}
+
+	@Override
+	public void tomarOpJug() {
+		System.out.print(" Seleccione la opcion a realizar: ");
+		int num = tomarInt ();
+		controlador.setearNumOpcion(num);
+	}
+
+	@Override
+	public void debePedirCarta() {
+		System.out.println("Antes de pasar debes tomar aunque sea una carta, se te ha dado una.");
+	}
+
+	@Override
+	public void perdioIntentos() {
+		System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
 	}
 	
 	

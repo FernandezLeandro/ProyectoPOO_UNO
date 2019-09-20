@@ -50,6 +50,10 @@ public class Controlador  implements IObservador{
 	public eColor obtenerNewColor () {
 		return juego.getNuevoColor();
 	}
+	
+	public void setearNumOpcion (int opcion) {
+		juego.setNumOpcion(opcion);
+	}
 	@Override
 	public void cambiosJuego(CambiosEnJuego cambio) {
 		switch (cambio) {
@@ -109,6 +113,18 @@ public class Controlador  implements IObservador{
 			break;
 		case mostrarCartasJug:
 			vista.mostrarCartasJug(juego.cartasJugadorActual());
+			break;
+		case opcionesJug:
+			vista.opcionesJug(juego.isTomoCarta());
+			break;
+		case tomarOpJug:
+			vista.tomarOpJug();
+			break;
+		case debePedirCarta:
+			vista.debePedirCarta();
+			break;
+		case perdioIntentos:
+			vista.perdioIntentos();
 			break;
 		}
 	}

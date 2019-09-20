@@ -24,5 +24,9 @@ public enum CambiosEnJuego {
 	finalizar,
 	opcionInvalida,
 	mostrarJugEnTurno,
-	mostrarCartasJug
+	mostrarCartasJug,
+	opcionesJug,
+	tomarOpJug,
+	debePedirCarta,
+	perdioIntentos
 }

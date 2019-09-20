@@ -29,4 +29,8 @@ public interface IVista {
 	void opcionInvalida();
 	void mostrarJugadorEnTurno (Jugador jugador);
 	void mostrarCartasJug (ArrayList <Carta> cartas);
+	void opcionesJug (boolean tomoCarta);
+	void tomarOpJug ();
+	void debePedirCarta();
+	void perdioIntentos();
 }
