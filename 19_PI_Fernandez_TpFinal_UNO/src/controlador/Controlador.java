@@ -126,6 +126,17 @@ public class Controlador  implements IObservador{
 		case perdioIntentos:
 			vista.perdioIntentos();
 			break;
+		case elegirColor:
+			vista.elegirColor();
+			break;
+		case tomarColor:
+			vista.tomarColor();
+			break;
 		}
+	}
+
+
+	public eColor mostrarNuevoColor() {
+		return juego.getNuevoColor();
 	}
 }

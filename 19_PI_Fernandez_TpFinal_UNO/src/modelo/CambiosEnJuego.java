@@ -28,5 +28,7 @@ public enum CambiosEnJuego {
 	opcionesJug,
 	tomarOpJug,
 	debePedirCarta,
-	perdioIntentos
+	perdioIntentos,
+	elegirColor,
+	tomarColor
 }

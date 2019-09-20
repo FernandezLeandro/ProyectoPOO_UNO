@@ -158,6 +158,11 @@ public class VistaConsola implements IVista{
 			System.out.println("El jugador " + jugador.getNombre() + ", agarra 4 cartas y pierde el turno");
 			nuevoColor (controlador.obtenerNewColor());
 			break;
+		case COMODIN:
+			System.out.println("-----------------------------------------");
+			System.out.println("El nuevo color en juego es: " + controlador.mostrarNuevoColor());
+			System.out.println("-----------------------------------------");
+			break;
 		default:
 			System.out.println("ERROR");
 			break;
@@ -239,6 +244,23 @@ public class VistaConsola implements IVista{
 	@Override
 	public void perdioIntentos() {
 		System.out.println("Has perdido tus 3 intentos, se te dara una carta extra.");
+	}
+
+	@Override
+	public void elegirColor() {
+		System.out.println("-----------------------------------------");
+		System.out.println("¿A qué color desea cambiar?");
+		System.out.println("-----------------------------------------");
+		System.out.println(" 1 - AMARILLO");
+		System.out.println(" 2 - AZUL");
+		System.out.println(" 3 - ROJO");
+		System.out.println(" 4 - VERDE");
+		System.out.println("-----------------------------------------");
+	}
+
+	@Override
+	public void tomarColor() {
+		tomarOpJug();
 	}
 	
 	

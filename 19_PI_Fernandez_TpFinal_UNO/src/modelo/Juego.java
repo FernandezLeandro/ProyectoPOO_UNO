@@ -549,17 +549,67 @@ public class Juego {
 			} else
 				validado = false;
 			break;
-			/*
+			
 		case COMODIN_ROBA_4:
-			
+			// Muestra los colores a elegir
+			queCambio = CambiosEnJuego.elegirColor;
+			notificarObservadores ();
+			// Recibe el color elegido
+			queCambio = CambiosEnJuego.tomarColor;
+			notificarObservadores ();
+			// Valida la entrada
+			while (numOpcion < 1 || numOpcion > 4) {
+				queCambio = CambiosEnJuego.opcionInvalida;
+				notificarObservadores ();
+				queCambio = CambiosEnJuego.tomarColor;
+				notificarObservadores ();
+			} 
+			// Actualiza el nuevo color al juego
+			cambiarColor (numOpcion);
+			// Notifica el cambio
+			queCambio = CambiosEnJuego.nuevoColor;
+			notificarObservadores();
+			pasaTurno (); 
+			queCambio = CambiosEnJuego.seCambiaTurno;
+			notificarObservadores();
+			jugadorTomaNCartas (turnoActualDe(), 4);
+			validado = true;
 			break;
+		
 		case COMODIN:
-			
+			// Muestra los colores a elegir
+			queCambio = CambiosEnJuego.elegirColor;
+			notificarObservadores ();
+			// Recibe el color elegido
+			queCambio = CambiosEnJuego.tomarColor;
+			notificarObservadores ();
+			// Valida la entrada
+			while (numOpcion < 1 || numOpcion > 4) {
+				queCambio = CambiosEnJuego.opcionInvalida;
+				notificarObservadores ();
+				queCambio = CambiosEnJuego.tomarColor;
+				notificarObservadores ();
+			} 
+			// Actualiza el nuevo color al juego
+			cambiarColor (numOpcion);
+			// Notifica el cambio
+			queCambio = CambiosEnJuego.nuevoColor;
+			notificarObservadores();
+			pasaTurno (); 
+			queCambio = CambiosEnJuego.seCambiaTurno;
+			notificarObservadores();
+			validado = true;
 			break;
-			*/
 		}
 		return validado;
 		
+	}
+
+	private void cambiarColor(int num) {
+		colores = eColor.values();
+		colorEnJuego = colores [num-1];
+		nuevoColor = colorEnJuego;
+				
 	}
 	
 }

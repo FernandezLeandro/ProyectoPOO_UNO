@@ -33,4 +33,6 @@ public interface IVista {
 	void tomarOpJug ();
 	void debePedirCarta();
 	void perdioIntentos();
+	void elegirColor ();
+	void tomarColor();
 }
